@@ -63,6 +63,12 @@ h3 {
     padding: 1% 2%;
     text-decoration: none;
     text-align: center;
+    transition: background-color .2s;
     width: 70%;
     margin-left: 15%;
+}
+
+.btn:hover,
+.btn:active {
+    background-color: #33b9ff;
 }
