@@ -72,3 +72,16 @@ h3 {
 .btn:active {
     background-color: #33b9ff;
 }
+
+.result {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.result h2 {
+    color: #fff;
+    font-size: 400%;
+    font-weight: 300;
+}
