@@ -1,15 +1,57 @@
+var restController = (function() {
+
+    var restaurants = [];
+
+    return {
+        addNewRest: function(restaurant) {
+            var lCRestaurant = restaurant.toLowerCase();
+            if (restaurants.indexOf(lCRestaurant) === -1) {
+                restaurants.push(lCRestaurant);
+            }
+        },
+
+        getRndRest: function() {
+            var selectedRest;
+            if (restaurants.length > 0) {
+                var rndNumber = Math.floor(Math.random() * restaurants.length);
+                selectedRest = restaurants[rndNumber];
+            } else {
+                selectedRest = 'N \\ A';
+            }
+            return selectedRest;
+        }
+    };
+    
+})();
+
+
 var UIController = (function() {
     var DOMstrings = {
         eventBtn: '.btn',
         resultDiv: '.result',
-        resultTxt: 'result-text'
+        resultTxt: 'result-text',
+        inputAdd: '.add-rest'
     };
 
-
+    function clearField() {
+        document.querySelector(DOMstrings.inputAdd).value = '';
+    }
 
     return {
         getDOMStrings: function() {
             return DOMstrings;
+        },
+
+        getInputValue: function() {
+            var restaurant = document.querySelector(DOMstrings.inputAdd).value;
+            clearField();
+
+            if (restaurant) {
+                return restaurant;
+            } else {
+                return -1;
+            }
+
         },
 
         displayRest: function(rest) {
@@ -19,25 +61,30 @@ var UIController = (function() {
 })();
 
 
-var controller = (function(UICtrl) {
+var controller = (function(UICtrl, restCtrl) {
 
     var DOM = UICtrl.getDOMStrings();
-    var restaurents = ['king meat', 'tzipora', 'bon bon', 'jems', 'oshi', '20 flavours'];
+    //var restaurents = ['king meat', 'tzipora', 'bon bon', 'jems', 'oshi', '20 flavours'];
     
     function setupEventListener() {
         document.querySelector(DOM.eventBtn).addEventListener('click', generateRndRest);
+        document.addEventListener('keypress', function(event) {
+            if (event.keyCode === 13 || event.which === 13) {
+                var restaurant;
+
+                restaurant = UICtrl.getInputValue();
+                if (restaurant !== -1) {
+                    restCtrl.addNewRest(restaurant);
+                }
+            }
+        })
     }
 
     function generateRndRest(event) {
+        var selectedRest;
         event.preventDefault();
         
-        // 1. Generate Random number
-        var rndNumber = Math.floor(Math.random() * restaurents.length);
-
-        // 2. Select restaurent using number
-        var selectedRest = restaurents[rndNumber];
-
-        // 3. Update UI
+        selectedRest = restCtrl.getRndRest();
         UICtrl.displayRest(selectedRest);
     }
 
@@ -48,6 +95,6 @@ var controller = (function(UICtrl) {
         }
     }
 
-})(UIController);
+})(UIController, restController);
 
 controller.init();
