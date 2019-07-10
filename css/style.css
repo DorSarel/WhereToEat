@@ -19,6 +19,16 @@ header {
     height: 100vh;
 }
 
+nav {
+    float: right;
+}
+
+ul {
+    list-style: none;
+    margin-top: 50px;
+    margin-right: 100px;
+}
+
 h1,
 h3 {
     color: #fff;
@@ -85,4 +95,15 @@ h3 {
     font-size: 400%;
     font-weight: 300;
     text-transform: uppercase;
+}
+
+.add-rest {
+    border: 1px solid #00a8ff;
+    border-radius: 5px;
+    font-size: 90%;
+    padding: 8px 20px;
+}
+
+.add-rest:focus {
+    outline: #00a8ff;
 }
